@@ -51,8 +51,8 @@ async def verify_yes(bot, message):
        group     = await get_group(message.chat.id)
        user_id   = group["user_id"] 
        user_name = group["user_name"]    
-    except:
-       return message.reply("❌ Make me admin here with all permissions!")
+    try:
+       link = (await bot.get_chat(message.chat.id)).invite_link
 
 
     text  = f"#NewRequest\n\n"
