@@ -1,4 +1,5 @@
 from utils import *
+from info import *
 from pyrogram import Client, filters 
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton 
 
@@ -77,16 +78,27 @@ async def process_buy(bot, update):
         # send photo
         photo_url = "https://graph.org/file/db1daea93ee48ce96b809.jpg"  # replace with your QR image URL
         await bot.send_photo(chat_id=update.message.chat.id, photo=photo_url)
-        text = "Pay and send screenshot below and Also Your Group Id After Sending Verify Request"
+        text = "Pay and then send me a screenshot of the payment below, and also provide your group ID so I can verify the payment. Once verified, you will receive access to the bot."
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("Send Screenshot", url="https://t.me/cyniteofficial")]
+            [InlineKeyboardButton("Send Screenshot", callback_data="send_screenshot")]
         ])
         await bot.send_message(chat_id=update.message.chat.id, text=text, reply_markup=keyboard)
     elif data == "upi":
         # send message and button
-        text = "`jaswindersingh42794@oksbi`\nPay And Send Screenshot below and Also Your Group Id After Sending Verify Request"
+        text = "`jaswindersingh42794@oksbi`\nPay and then send me a screenshot of the payment below, and also provide your group ID so I can verify the payment. Once verified, you will receive access to the bot."
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("Send Screenshot", url="https://t.me/cyniteofficial")]
+            [InlineKeyboardButton("Send Screenshot", callback_data="send_screenshot")]
         ])
         await bot.send_message(chat_id=update.message.chat.id, text=text, reply_markup=keyboard)
+
+@Client.on_callback_query(filters.regex(r"^send_screenshot"))
+async def send_screenshot(bot, update):
+    text = "Please send me a screenshot of your payment."
+    await bot.send_message(chat_id=update.message.chat.id, text=text)
+
+@Client.on_message(filters.photo & ~filters.edited)
+async def forward_photo(bot, message):
+    # Forward photo to bot owner
+    await bot.forward_messages(chat_id="ADMIN", from_chat_id=message.chat.id, message_ids=message.message_id)
+
 
