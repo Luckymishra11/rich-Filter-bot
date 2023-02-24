@@ -48,7 +48,7 @@ async def misc(bot, update):
                                  disable_web_page_preview=True,
                                  reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("⬅️ Back", callback_data="misc_home")]])) 
 
-    elif data==buymoney":
+    elif data=="buymoney":
         await update.message.edit(text=script.BUY.format((await bot.get_me()).mention), 
                                   disable_web_page_preview=True,
                                   reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("QR", callback_data="buy_qr"),
