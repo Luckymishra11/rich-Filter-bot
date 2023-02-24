@@ -77,14 +77,14 @@ async def process_buy(bot, update):
         # send photo
         photo_url = "https://graph.org/file/db1daea93ee48ce96b809.jpg"  # replace with your QR image URL
         await bot.send_photo(chat_id=update.message.chat.id, photo=photo_url)
-        text = "Pay and send screenshot below"
+        text = "Pay and send screenshot below and Also Your Group Id After Sending Verify Request"
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("Send Screenshpt", url="https://t.me/cyniteofficial")]
+            [InlineKeyboardButton("Send Screenshot", url="https://t.me/cyniteofficial")]
         ])
         await bot.send_message(chat_id=update.message.chat.id, text=text, reply_markup=keyboard)
     elif data == "upi":
         # send message and button
-        text = "jaswindersingh42794@oksbi\n Pay And Send Screenshot"
+        text = "jaswindersingh42794@oksbi\n Pay And Send Screenshot below and Also Your Group Id After Sending Verify Request"
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton("Send Screenshot", url="https://t.me/cyniteofficial")]
         ])
