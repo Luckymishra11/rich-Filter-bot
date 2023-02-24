@@ -108,7 +108,7 @@ async def report_user(bot, message):
         report += f"𝖬𝖾𝗌𝗌𝖺𝗀𝖾 : {message.reply_to_message.link}"
         for admin in admins:
             try:
-                reported_post = await message.reply_to_message.forward(Config.BOT_OWNER)
+                reported_post = await message.reply_to_message.forward(ADMIN)
                 await reported_post.reply_text(
                     text=report,
                     chat_id=admin.user.id,
@@ -120,7 +120,7 @@ async def report_user(bot, message):
         if success:
             await message.reply_text("Hey Mr {} Your Message Has Been Sent To Bot Owner!")
     else:
-        if message.chat.type == "private":
-            await message.reply_text("Please reply to a message to report it.")
+        if not message.chat.type == "private":
+            await message.reply_text("Please use this command in a private chat with the bot.")
         else:
-            await message.reply_text("I'm sorry, but I only work in private chat with the bot. Please send me a message in a private chat.")
+            await message.reply_text("Please reply to a message to report it.")
