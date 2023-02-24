@@ -52,14 +52,11 @@ async def verify_yes(bot, message):
        user_id   = group["user_id"] 
        user_name = group["user_name"]    
     
-     
-    members_count = await bot.get_chat_members_count(chat_id=message.chat.id)       
-    text  = f"#NewRequest\n\n"
+         text  = f"#NewRequest\n\n"
     text += f"Requested By: {message.from_user.mention}\n"
     text += f"User ID: `{message.from_user.id}`\n"
     text += f"Group: [{message.chat.title}]({link})\n"
     text += f"Group ID: `{message.chat.id}`\n"
-    text += f"Total Members: `{members_count}`\n"
    
     await bot.send_message(chat_id=LOG_CHANNEL,
                            text=text,
