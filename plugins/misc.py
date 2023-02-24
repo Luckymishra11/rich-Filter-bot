@@ -84,7 +84,7 @@ async def process_buy(bot, update):
         await bot.send_message(chat_id=update.message.chat.id, text=text, reply_markup=keyboard)
     elif data == "upi":
         # send message and button
-        text = "jaswindersingh42794@oksbi\n Pay And Send Screenshot below and Also Your Group Id After Sending Verify Request"
+        text = "`jaswindersingh42794@oksbi`\nPay And Send Screenshot below and Also Your Group Id After Sending Verify Request"
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton("Send Screenshot", url="https://t.me/cyniteofficial")]
         ])
