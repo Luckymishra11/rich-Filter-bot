@@ -109,7 +109,7 @@ async def report_user(bot, message):
             report += f"𝖬𝖾𝗌𝗌𝖺𝗀𝖾 : {message.reply_to_message.link}"
             for admin in admins:
                 try:
-                    reported_post = await message.reply_to_message.forward(Config.BOT_OWNER)
+                    reported_post = await message.reply_to_message.forward(ADMIN)
                     await reported_post.reply_text(
                         text=report,
                         chat_id=admin.user.id,
