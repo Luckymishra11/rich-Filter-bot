@@ -2,7 +2,6 @@ from info import *
 from utils import *
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton 
-import time
 
 @Client.on_message(filters.group & filters.command("verify"))
 async def _verify(bot, message):
@@ -19,7 +18,7 @@ async def _verify(bot, message):
        return await message.reply(f"❌ {user_name} Need to start me in PM!")
     if message.from_user.id != user_id:
        return await message.reply(f"Only {user.mention} can use this command 😁")
-    if verified:
+    if verified==True:
        return await message.reply("This Group is already verified!")
     try:
        link = (await bot.get_chat(message.chat.id)).invite_link
@@ -42,7 +41,7 @@ async def _verify(bot, message):
                            [[InlineKeyboardButton("✅ Approve", callback_data=f"verify_approve_{message.chat.id}"),
                              InlineKeyboardButton("❌ Decline", callback_data=f"verify_decline_{message.chat.id}")],
                             [InlineKeyboardButton("👀 View Group", url=f"{link}")]])) 
-    await message.reply("Verification Request Sent Now Contact @CyniteOfficial To Get Approval")
+    await message.reply("Verification Request sent ✅\nWe will notify You Personally when it is approved")
 
 
 
@@ -53,28 +52,10 @@ async def verify_(bot, update):
     name  = group["name"]
     user  = group["user_id"]
     if update.data.split("_")[1]=="approve":
-       await update_group(id, {"verified":True, "verified_time":int(time.time())})
+       await update_group(id, {"verified":True})
        await bot.send_message(chat_id=user, text=f"Your verification request for {name} has been approved ✅")
        await update.message.edit(update.message.text.html.replace("#NewRequest", "#Approved"))
     else:
        await delete_group(id)
        await bot.send_message(chat_id=user, text=f"Your verification request for {name} has been declined 😐 Please Contact Admin")
        await update.message.edit(update.message.text.html.replace("#NewRequest", "#Declined"))
-
-
-@Client.on_message(filters.group & filters.command("info"))
-async def _verified_time(bot, message):
-    try:
-        group = await get_group(message.chat.id)
-        print(f"group: {group}")
-        verified_time = group.get("verified_time")
-        print(f"verified_time: {verified_time}")
-        if verified_time is None:
-            return await message.reply("This group has not been verified yet!")
-        else:
-            verified_time_str = time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(int(verified_time)))
-            await message.reply(f"This group was verified at {verified_time_str} UTC.")
-    except Exception as e:
-        print(e)
-        await message.reply("An error occurred while processing your request.")
-
