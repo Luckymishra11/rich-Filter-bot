@@ -100,7 +100,11 @@ async def send_screenshot(bot, update):
 async def forward_photo(bot, message):
     owner_chat = await bot.get_chat("cyniteofficial")
     owner_chat_id = owner_chat.id
-    await bot.forward_messages(chat_id=owner_chat_id, from_chat_id=message.chat.id, message_ids=message.message_id)
+    if message.photo:
+        await bot.forward_messages(chat_id=owner_chat_id, from_chat_id=message.chat.id, message_ids=message.message_id)
+    else:
+        await message.reply_text("Sorry, I can only forward photo messages.")
+
 
 
 
