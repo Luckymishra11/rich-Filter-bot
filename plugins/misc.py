@@ -65,16 +65,17 @@ async def misc(bot, update):
          
 @Client.on_message(filters.command("buy"))
 async def buy(bot, message):
-    if message.chat.type != "private":
-        # inform the user that the command only works in private chats and provide a button to start a private chat
-        await message.reply("This command only works in private chats. Click the button below to start a private chat with me.", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Start Private Chat", url=f"https://t.me/yourresultsrobot")]]))
-        return
-    keyboard = InlineKeyboardMarkup([
-        [InlineKeyboardButton("QR", callback_data="buy_qr")],[
-         InlineKeyboardButton("UPI", callback_data="buy_upi")],[
-         InlineKeyboardButton("MDISK VIEWS", callback_data="buy_mdisk")]
-    ])
-    await message.reply("How do you want to pay?", reply_markup=keyboard)
+    if message.chat.type == 'private':
+        keyboard = InlineKeyboardMarkup([
+            [InlineKeyboardButton("QR", callback_data="buy_qr")],[
+            InlineKeyboardButton("UPI", callback_data="buy_upi")],[
+            InlineKeyboardButton("MDISK VIEWS", callback_data="buy_mdisk")]
+        ])
+        await message.reply("How do you want to pay?", reply_markup=keyboard)
+    else:
+        markup = InlineKeyboardMarkup([[InlineKeyboardButton('📨 Send Private Message', url=f'http://t.me/yourresultsrobot?start=buy')]])
+        await message.reply("Sorry, the buy command can only be used in private messages.", reply_markup=markup)
+
 
 
 @Client.on_callback_query(filters.regex(r"^buy"))
