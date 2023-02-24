@@ -66,8 +66,8 @@ async def verify_yes(bot, update):
                            text=text,
                            disable_web_page_preview=True,
                            reply_markup=InlineKeyboardMarkup(
-                           [[InlineKeyboardButton("✅ Approve", callback_data=f"verify_approve_{message.chat.id}"),
-                                                   InlineKeyboardButton("❌ Decline", callback_data=f"verify_decline_{message.chat.id}")],
+                           [[InlineKeyboardButton("✅ Approve", callback_data=f"verifyrequest_approve_{message.chat.id}"),
+                                                   InlineKeyboardButton("❌ Decline", callback_data=f"verifyrequest_decline_{message.chat.id}")],
                             [InlineKeyboardButton("👀 View Group", url=f"{link}")]])) 
     await message.reply("Verification Request sent ✅\nWe will notify You Personally when it is approved")
 
@@ -75,7 +75,7 @@ async def verify_yes(bot, update):
 
 
 
-@Client.on_callback_query(filters.regex(r"^verify"))
+@Client.on_callback_query(filters.regex(r"^verifyrequest"))
 async def verify_(bot, update):
     id = int(update.data.split("_")[-1])
     group = await get_group(id)
