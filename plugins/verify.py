@@ -61,14 +61,13 @@ async def verify_(bot, update):
        await bot.send_message(chat_id=user, text=f"Your verification request for {name} has been declined 😐 Please Contact Admin")
        await update.message.edit(update.message.text.html.replace("#NewRequest", "#Declined"))
 
-@Client.on_message(filters.group & filters.command("verified_time"))
+@Client.on_message(filters.group & filters.command("info"))
 async def _verified_time(bot, message):
     try:
         group = await get_group(message.chat.id)
         verified_time = group.get("verified_time")
-        if verified_time is None:
+        verified = group.get("verified", False) # Add verified key with default value False
+        if not verified:
             return await message.reply("This group has not been verified yet!")
-        await message.reply(f"This group was verified at {time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(verified_time))} UTC.")
-    except:
-        await message.reply("An error occurred while processing your request.")
-
+        if verified_time is None:
+            return await message.reply("This group has not been verified yet
