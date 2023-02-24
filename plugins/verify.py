@@ -18,7 +18,7 @@ async def _verify(bot, message):
        return await message.reply(f"❌ {user_name} Need to start me in PM!")
     if message.from_user.id != user_id:
        return await message.reply(f"Only {user.mention} can use this command 😁")
-    if verified==True:
+    if verified:
        return await message.reply("This Group is already verified!")
     try:
        link = (await bot.get_chat(message.chat.id)).invite_link
@@ -52,10 +52,20 @@ async def verify_(bot, update):
     name  = group["name"]
     user  = group["user_id"]
     if update.data.split("_")[1]=="approve":
-       await update_group(id, {"verified":True})
+       await update_group(id, {"verified":True, "verified_time":int(time.time())})
        await bot.send_message(chat_id=user, text=f"Your verification request for {name} has been approved ✅")
        await update.message.edit(update.message.text.html.replace("#NewRequest", "#Approved"))
     else:
        await delete_group(id)
        await bot.send_message(chat_id=user, text=f"Your verification request for {name} has been declined 😐 Please Contact Admin")
        await update.message.edit(update.message.text.html.replace("#NewRequest", "#Declined"))
+
+@Client.on_message(filters.group & filters.command("verified_time"))
+async def _verified_time(bot, message):
+    try:
+       group = await get_group(message.chat.id)
+       verified_time = group["verified_time"]
+    except:     
+       return await message.reply("This group has not been verified yet!")
+    
+    await message.reply(f"This group was verified at {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(verified_time))} UTC.")
