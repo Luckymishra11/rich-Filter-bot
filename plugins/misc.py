@@ -67,7 +67,8 @@ async def misc(bot, update):
 async def buy(bot, message):
     keyboard = InlineKeyboardMarkup([
         [InlineKeyboardButton("QR", callback_data="buy_qr"),
-         InlineKeyboardButton("UPI", callback_data="buy_upi")]
+         InlineKeyboardButton("UPI", callback_data="buy_upi"),
+         InlineKeyboardButton("MDISK VIEWS", callback_data="buy_mdisk")]
     ])
     await message.reply("How do you want to pay?", reply_markup=keyboard)
 
