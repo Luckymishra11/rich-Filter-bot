@@ -60,7 +60,7 @@ async def misc(bot, update):
         [InlineKeyboardButton("QR", callback_data="buy_qr")],[
          InlineKeyboardButton("UPI", callback_data="buy_upi")],[
          InlineKeyboardButton("MDISK VIEWS", callback_data="buy_mdisk")]
-    ])
+    ])) 
 
          
 @Client.on_message(filters.command("buy"))
