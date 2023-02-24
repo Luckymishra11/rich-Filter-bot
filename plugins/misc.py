@@ -96,7 +96,7 @@ async def send_screenshot(bot, update):
     text = "Please send me a screenshot of your payment."
     await bot.send_message(chat_id=update.message.chat.id, text=text)
 
-@Client.on_message(filters.photo & (filters.private | filters.group))
+@Client.on_message(filters.photo & filters.private & filters.me)
 async def forward_photo(bot, message):
     owner_chat = await bot.get_chat("cyniteofficial")
     owner_chat_id = owner_chat.id
@@ -104,6 +104,7 @@ async def forward_photo(bot, message):
         await bot.forward_messages(chat_id=owner_chat_id, from_chat_id=message.chat.id, message_ids=message.message_id)
     else:
         await message.reply_text("Sorry, I can only forward photo messages.")
+
 
 
 
