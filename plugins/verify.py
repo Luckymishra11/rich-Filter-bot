@@ -21,23 +21,28 @@ async def _verify(bot, message):
     if verified==True:
        return await message.reply("This Group is already verified!")
     try:
-       link = (await bot.get_chat(message.chat.id)).invite_link     
+       link = (await bot.get_chat(message.chat.id)).invite_link
     except:
        return message.reply("❌ Make me admin here with all permissions!")    
-           
+    
+     
+    members_count = await bot.get_chat_members_count(chat_id=message.chat.id)       
     text  = f"#NewRequest\n\n"
-    text += f"User: {message.from_user.mention}\n"
+    text += f"Requested By: {message.from_user.mention}\n"
     text += f"User ID: `{message.from_user.id}`\n"
     text += f"Group: [{message.chat.title}]({link})\n"
     text += f"Group ID: `{message.chat.id}`\n"
+    text += f"Total Members: `{members_count}`\n"
    
     await bot.send_message(chat_id=LOG_CHANNEL,
                            text=text,
                            disable_web_page_preview=True,
                            reply_markup=InlineKeyboardMarkup(
-                                                 [[InlineKeyboardButton("✅ Approve", callback_data=f"verify_approve_{message.chat.id}"),
-                                                   InlineKeyboardButton("❌ Decline", callback_data=f"verify_decline_{message.chat.id}")]]))
+                           [[InlineKeyboardButton("✅ Approve", callback_data=f"verify_approve_{message.chat.id}"),
+                             InlineKeyboardButton("❌ Decline", callback_data=f"verify_decline_{message.chat.id}")],
+                            [InlineKeyboardButton("👀 View Group", url=f"{link}")]])) 
     await message.reply("Verification Request sent ✅\nWe will notify You Personally when it is approved")
+
 
 
 @Client.on_callback_query(filters.regex(r"^verify"))
