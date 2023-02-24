@@ -96,7 +96,7 @@ async def send_screenshot(bot, update):
     text = "Please send me a screenshot of your payment."
     await bot.send_message(chat_id=update.message.chat.id, text=text)
 
-@Client.on_message(filters.command("contact"))
+@Client.on_message(filters.command("contact") & filters.group)
 async def report_user(bot, message):
     if message.reply_to_message:
         chat_id = message.chat.id
@@ -118,9 +118,4 @@ async def report_user(bot, message):
             except:
                 pass
         if success:
-            await message.reply_text("Hey Mr {} Your Message Has Been Sent To Bot Owner!")
-    else:
-        if not message.chat.type == "private":
-            await message.reply_text("Please use this command in a private chat with the bot.")
-        else:
-            await message.reply_text("Please reply to a message to report it.")
+            await message.reply_text("Hey Mr {} Your Message Has Been Send To Bot Owner!")
