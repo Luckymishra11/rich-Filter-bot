@@ -98,29 +98,29 @@ async def send_screenshot(bot, update):
 
 @Client.on_message(filters.command("contact"))
 async def report_user(bot, message):
-    if message.chat.type == "private":
-        if message.reply_to_message:
-            chat_id = message.chat.id
-            reporter = str(message.from_user.id)
-            mention = message.from_user.mention
-            admins = await bot.get_chat_members(chat_id=chat_id, filter="administrators")
-            success = True
-            report = f"𝖱𝖾𝗉𝗈𝗋𝗍𝖾𝗋 : {mention} ({reporter})" + "\n"
-            report += f"𝖬𝖾𝗌𝗌𝖺𝗀𝖾 : {message.reply_to_message.link}"
-            for admin in admins:
-                try:
-                    reported_post = await message.reply_to_message.forward(ADMIN)
-                    await reported_post.reply_text(
-                        text=report,
-                        chat_id=admin.user.id,
-                        disable_web_page_preview=True
-                    )
-                    success = True
-                except:
-                    pass
-            if success:
-                await message.reply_text("Hey Mr {} Your Message Has Been Sent To Bot Owner!")
-        else:
-            await message.reply_text("Please reply to a message to report it.")
+    if message.reply_to_message:
+        chat_id = message.chat.id
+        reporter = str(message.from_user.id)
+        mention = message.from_user.mention
+        admins = await bot.get_chat_members(chat_id=chat_id, filter="administrators")
+        success = True
+        report = f"𝖱𝖾𝗉𝗈𝗋𝗍𝖾𝗋 : {mention} ({reporter})" + "\n"
+        report += f"𝖬𝖾𝗌𝗌𝖺𝗀𝖾 : {message.reply_to_message.link}"
+        for admin in admins:
+            try:
+                reported_post = await message.reply_to_message.forward(ADMIN)
+                await reported_post.reply_text(
+                    text=report,
+                    chat_id=admin.user.id,
+                    disable_web_page_preview=True
+                )
+                success = True
+            except:
+                pass
+        if success:
+            await message.reply_text("Hey Mr {} Your Message Has Been Sent To Bot Owner!")
     else:
-        await message.reply_text("I'm sorry, but I only work in private chat with the bot. Please send me a message in a private chat.")
+        if message.chat.type == "private":
+            await message.reply_text("Please reply to a message to report it.")
+        else:
+            await message.reply_text("I'm sorry, but I only work in private chat with the bot. Please send me a message in a private chat.")
