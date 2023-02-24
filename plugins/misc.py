@@ -9,15 +9,10 @@ async def start(bot, message):
                         disable_web_page_preview=True,
                         reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('➕ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ➕', url=f'http://t.me/yourfindbot?startgroup=true')
             ],[InlineKeyboardButton("ʜᴇʟᴘ", callback_data="misc_help"),
-                                                            InlineKeyboardButton("ʙᴜʏ", callback_data="buy")]]))  
+                                                            InlineKeyboardButton("ʙᴜʏ", callback_data="misc_buy")]]))  
 @Client.on_message(filters.command("help"))
 async def help(bot, message):
     await message.reply(text=script.HELP, 
-                        disable_web_page_preview=True)
-
-@Client.on_message(filters.command("about"))
-async def about(bot, message):
-    await message.reply(text=script.ABOUT.format((await bot.get_me()).mention), 
                         disable_web_page_preview=True)
 
 @Client.on_message(filters.command("stats"))
