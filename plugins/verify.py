@@ -50,22 +50,7 @@ async def verify_yes(bot, message):
     try:
        group     = await get_group(message.chat.id)
        user_id   = group["user_id"] 
-       user_name = group["user_name"]
-       verified  = group["verified"]
-    except:     
-       return await bot.leave_chat(message.chat.id)  
-    try:       
-       user = await bot.get_users(user_id)
-    except:
-       return await message.reply(f"❌ {user_name} Need to start me in PM!")
-    if message.from_user.id != user_id:
-       return await message.reply(f"Only {user.mention} can use this command 😁")
-    if verified==True:
-       return await message.reply("This Group is already verified!")
-    try:
-       link = (await bot.get_chat(message.chat.id)).invite_link
-    except:
-       return message.reply("❌ Make me admin here with all permissions!")    
+       user_name = group["user_name"]    
     
      
     members_count = await bot.get_chat_members_count(chat_id=message.chat.id)       
