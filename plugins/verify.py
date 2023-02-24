@@ -2,6 +2,7 @@ from info import *
 from utils import *
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton 
+import time
 
 @Client.on_message(filters.group & filters.command("verify"))
 async def _verify(bot, message):
