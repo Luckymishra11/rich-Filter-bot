@@ -38,21 +38,29 @@ async def id(bot, message):
 @Client.on_callback_query(filters.regex(r"^misc"))
 async def misc(bot, update):
     data = update.data.split("_")[-1]
-    if data=="home":
-       await update.message.edit(text=script.START.format(update.from_user.mention),
-                                 disable_web_page_preview=True,
-                                 reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("ʜᴇʟᴘ", callback_data="misc_help"),
-                                                            InlineKeyboardButton("ᴀʙᴏᴜᴛ", callback_data="misc_about")]])) 
-    elif data=="help":
-       await update.message.edit(text=script.HELP, 
-                                 disable_web_page_preview=True,
-                                 reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("⬅️ Back", callback_data="misc_home")]])) 
+    if data == "home":
+        await update.message.edit(
+            text=script.START.format(update.from_user.mention),
+            disable_web_page_preview=True,
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("ʜᴇʟᴘ", callback_data="misc_help"),
+                                                InlineKeyboardButton("ᴀʙᴏᴜᴛ", callback_data="misc_about")]])
+        )
+    elif data == "help":
+        await update.message.edit(
+            text=script.HELP,
+            disable_web_page_preview=True,
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("⬅️ Back", callback_data="misc_home")]])
+        )
+    elif data == "buymoney":
+        await update.message.edit(
+            text=script.BUY.format((await bot.get_me()).mention),
+            disable_web_page_preview=True,
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("QR", callback_data="buy_qr"),
+                 InlineKeyboardButton("UPI", callback_data="buy_upi")]]
+            )
+        )
 
-    elif data=="buymoney":
-        await update.message.edit(text=script.BUY.format((await bot.get_me()).mention), 
-                                  disable_web_page_preview=True,
-                                  reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("QR", callback_data="buy_qr"),
-         InlineKeyboardButton("UPI", callback_data="buy_upi)]]))
          
 @Client.on_message(filters.command("buy"))
 async def buy(bot, message):
