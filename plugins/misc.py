@@ -58,3 +58,25 @@ async def misc(bot, update):
                                   disable_web_page_preview=True,
                                   reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("⬅️ Back", callback_data="misc_home")]]))
          
+@Client.on_message(filters.command("buy"))
+async def buy(bot, message):
+    keyboard = InlineKeyboardMarkup([
+        [InlineKeyboardButton("QR", callback_data="buy_qr"),
+         InlineKeyboardButton("UPI", callback_data="buy_upi")]
+    ])
+    await message.reply("How do you want to pay?", reply_markup=keyboard)
+
+@Client.on_callback_query(filters.regex(r"^buy"))
+async def process_buy(bot, update):
+    data = update.data.split("_")[-1]
+    if data == "qr":
+        # send photo
+        photo_url = "https://example.com/qr.png"  # replace with your QR image URL
+        await bot.send_photo(chat_id=update.message.chat.id, photo=photo_url)
+    elif data == "upi":
+        # send message and button
+        text = "How are you?"
+        keyboard = InlineKeyboardMarkup([
+            [InlineKeyboardButton("Contact", url="https://t.me/your_telegram_id")]
+        ])
+        await bot.send_message(chat_id=update.message.chat.id, text=text, reply_markup=keyboard)
