@@ -53,6 +53,8 @@ async def verify_yes(bot, message):
        user_name = group["user_name"]    
     except:
        return message.reply("❌ Make me admin here with all permissions!")
+
+
     text  = f"#NewRequest\n\n"
     text += f"Requested By: {message.from_user.mention}\n"
     text += f"User ID: `{message.from_user.id}`\n"
