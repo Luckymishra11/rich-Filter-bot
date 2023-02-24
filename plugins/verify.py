@@ -34,6 +34,33 @@ async def _verify(bot, message):
     text += f"Group ID: `{message.chat.id}`\n"
     text += f"Total Members: `{members_count}`\n"
    
+    await bot.send_message(chat_id=message.chat.id,
+                           text="Have you bought paid to bot owner?",
+                           reply_markup=InlineKeyboardMarkup(
+                           [[InlineKeyboardButton("Yes", callback_data=f"verify_yes_{message.chat.id}"),
+                             InlineKeyboardButton("No", callback_data=f"verify_no_{message.chat.id}")]]))
+    await bot.send_message(chat_id=LOG_CHANNEL,
+                           text=text,
+                           disable_web_page_preview=True,
+                           reply_markup=InlineKeyboardMarkup(
+                           [[InlineKeyboardButton("👀 View Group", url=f"{link}")]])) 
+                           
+@Client.on_callback_query(filters.regex(r"^verify_yes"))
+async def verify_yes(bot, update):
+    id = int(update.data.split("_")[-1])
+    group = await get_group(id)
+    name  = group["name"]
+    user  = group["user_id"]
+    try:
+        link = (await bot.get_chat(id)).invite_link
+    except:
+        return await update.message.edit_text("❌ Make me admin here with all permissions!")
+    text  = f"#NewRequest\n\n"
+    text += f"Requested By: {user.mention}\n"
+    text += f"User ID: `{user.id}`\n"
+    text += f"Group: [{name}]({link})\n"
+    text += f"Group ID: `{id}`\n"
+    text += f"Total Members: `{(await bot.get_chat_members_count(chat_id=id))}`\n"
     await bot.send_message(chat_id=LOG_CHANNEL,
                            text=text,
                            disable_web_page_preview=True,
