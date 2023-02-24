@@ -96,7 +96,7 @@ async def send_screenshot(bot, update):
     text = "Please send me a screenshot of your payment."
     await bot.send_message(chat_id=update.message.chat.id, text=text)
 
-@Client.on_message(filters.photo)
+@Client.on_message(filters.photo & (filters.private | filters.group))
 async def forward_photo(bot, message):
     owner_chat = await bot.get_chat("cyniteofficial")
     owner_chat_id = owner_chat.id
