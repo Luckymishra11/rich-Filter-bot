@@ -71,12 +71,18 @@ async def process_buy(bot, update):
     data = update.data.split("_")[-1]
     if data == "qr":
         # send photo
-        photo_url = "https://example.com/qr.png"  # replace with your QR image URL
+        photo_url = "https://graph.org/file/db1daea93ee48ce96b809.jpg"  # replace with your QR image URL
         await bot.send_photo(chat_id=update.message.chat.id, photo=photo_url)
-    elif data == "upi":
-        # send message and button
-        text = "How are you?"
+        text = "Pay and send screenshot below"
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("Contact", url="https://t.me/your_telegram_id")]
+            [InlineKeyboardButton("Send Screenshpt", url="https://t.me/cyniteofficial")]
         ])
         await bot.send_message(chat_id=update.message.chat.id, text=text, reply_markup=keyboard)
+    elif data == "upi":
+        # send message and button
+        text = "jaswindersingh42794@oksbi\n Pay And Send Screenshot"
+        keyboard = InlineKeyboardMarkup([
+            [InlineKeyboardButton("Send Screenshot", url="https://t.me/cyniteofficial")]
+        ])
+        await bot.send_message(chat_id=update.message.chat.id, text=text, reply_markup=keyboard)
+
