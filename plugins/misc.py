@@ -57,9 +57,9 @@ async def misc(bot, update):
             text=script.BUY.format((await bot.get_me()).mention),
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup([
-        [InlineKeyboardButton("QR", callback_data="buy_qr")],[
-         InlineKeyboardButton("UPI", callback_data="buy_upi")],[
-         InlineKeyboardButton("MDISK VIEWS", callback_data="buy_mdisk")]
+        [InlineKeyboardButton("Qr", callback_data="buy_qr")],[
+         InlineKeyboardButton("Upi", callback_data="buy_upi")],[
+         InlineKeyboardButton("Mdisk Views", callback_data="buy_mdisk")]
     ])) 
 
          
@@ -79,14 +79,14 @@ async def process_buy(bot, update):
         # send photo
         photo_url = "https://graph.org/file/db1daea93ee48ce96b809.jpg"  # replace with your QR image URL
         await bot.send_photo(chat_id=update.message.chat.id, photo=photo_url)
-        text = "Pay and then send me a screenshot of the payment below, and also provide your group ID so I can verify the payment. Once verified, you will receive access to the bot."
+        text = "Pay 40 Ruppe and then send me a screenshot of the payment below, and also provide your group ID so I can verify the payment. Once verified, you will receive access to the bot."
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton("Send Screenshot", url=f'https://t.me/cyniteofficial')]
         ])
         await bot.send_message(chat_id=update.message.chat.id, text=text, reply_markup=keyboard)
     elif data == "upi":
         # send message and button
-        text = "`jaswindersingh42794@oksbi`\nPay and then send me a screenshot of the payment below, and also provide your group ID so I can verify the payment. Once verified, you will receive access to the bot."
+        text = "`jaswindersingh42794@oksbi`\nPay 40 Ruppe and then send me a screenshot of the payment below, and also provide your group ID so I can verify the payment. Once verified, you will receive access to the bot."
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton("Send Screenshot", url=f'https://t.me/cyniteofficial')]
         ])
