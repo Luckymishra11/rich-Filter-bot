@@ -66,12 +66,15 @@ async def verify_(bot, update):
 async def _verified_time(bot, message):
     try:
         group = await get_group(message.chat.id)
+        print(f"group: {group}")
         verified_time = group.get("verified_time")
+        print(f"verified_time: {verified_time}")
         if verified_time is None:
-            await message.reply("This group has not been verified yet!")
+            return await message.reply("This group has not been verified yet!")
         else:
             verified_time_str = time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(int(verified_time)))
             await message.reply(f"This group was verified at {verified_time_str} UTC.")
     except Exception as e:
         print(e)
         await message.reply("An error occurred while processing your request.")
+
