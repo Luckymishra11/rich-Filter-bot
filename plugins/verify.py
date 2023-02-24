@@ -46,28 +46,42 @@ async def _verify(bot, message):
                            [[InlineKeyboardButton("👀 View Group", url=f"{link}")]])) 
                            
 @Client.on_callback_query(filters.regex(r"^verify_yes"))
-async def verify_yes(bot, update):
-    id = int(update.data.split("_")[-1])
-    group = await get_group(id)
-    name = group["name"]
-    user_id = group["user_id"]
-    user = await bot.get_users(user_id)
+async def verify_yes(bot, message):
     try:
-        link = (await bot.get_chat(id)).invite_link
+       group     = await get_group(message.chat.id)
+       user_id   = group["user_id"] 
+       user_name = group["user_name"]
+       verified  = group["verified"]
+    except:     
+       return await bot.leave_chat(message.chat.id)  
+    try:       
+       user = await bot.get_users(user_id)
     except:
-        return await update.message.edit_text("❌ Make me admin here with all permissions!")
-    text = f"#NewRequest\n\n"
-    text += f"Requested By: {user.mention}\n"
-    text += f"User ID: `{user.id}`\n"
-    text += f"Group: [{name}]({link})\n"
-    text += f"Group ID: `{id}`\n"
-    text += f"Total Members: `{(await bot.get_chat_members_count(chat_id=id))}`\n"
+       return await message.reply(f"❌ {user_name} Need to start me in PM!")
+    if message.from_user.id != user_id:
+       return await message.reply(f"Only {user.mention} can use this command 😁")
+    if verified==True:
+       return await message.reply("This Group is already verified!")
+    try:
+       link = (await bot.get_chat(message.chat.id)).invite_link
+    except:
+       return message.reply("❌ Make me admin here with all permissions!")    
+    
+     
+    members_count = await bot.get_chat_members_count(chat_id=message.chat.id)       
+    text  = f"#NewRequest\n\n"
+    text += f"Requested By: {message.from_user.mention}\n"
+    text += f"User ID: `{message.from_user.id}`\n"
+    text += f"Group: [{message.chat.title}]({link})\n"
+    text += f"Group ID: `{message.chat.id}`\n"
+    text += f"Total Members: `{members_count}`\n"
+   
     await bot.send_message(chat_id=LOG_CHANNEL,
                            text=text,
                            disable_web_page_preview=True,
                            reply_markup=InlineKeyboardMarkup(
-                           [[InlineKeyboardButton("✅ Approve", callback_data=f"verifyrequest_approve_{message.chat.id}"),
-                                                   InlineKeyboardButton("❌ Decline", callback_data=f"verifyrequest_decline_{message.chat.id}")],
+                           [[InlineKeyboardButton("✅ Approve", callback_data=f"verify_approve_{message.chat.id}"),
+                             InlineKeyboardButton("❌ Decline", callback_data=f"verify_decline_{message.chat.id}")],
                             [InlineKeyboardButton("👀 View Group", url=f"{link}")]])) 
     await message.reply("Verification Request sent ✅\nWe will notify You Personally when it is approved")
 
