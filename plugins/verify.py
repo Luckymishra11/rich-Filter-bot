@@ -49,13 +49,14 @@ async def _verify(bot, message):
 async def verify_yes(bot, update):
     id = int(update.data.split("_")[-1])
     group = await get_group(id)
-    name  = group["name"]
-    user  = group["user_id"]
+    name = group["name"]
+    user_id = group["user_id"]
+    user = await bot.get_users(user_id)
     try:
         link = (await bot.get_chat(id)).invite_link
     except:
         return await update.message.edit_text("❌ Make me admin here with all permissions!")
-    text  = f"#NewRequest\n\n"
+    text = f"#NewRequest\n\n"
     text += f"Requested By: {user.mention}\n"
     text += f"User ID: `{user.id}`\n"
     text += f"Group: [{name}]({link})\n"
@@ -69,6 +70,7 @@ async def verify_yes(bot, update):
                              InlineKeyboardButton("❌ Decline", callback_data=f"verify_decline_{message.chat.id}")],
                             [InlineKeyboardButton("👀 View Group", url=f"{link}")]])) 
     await message.reply("Verification Request sent ✅\nWe will notify You Personally when it is approved")
+
 
 
 
