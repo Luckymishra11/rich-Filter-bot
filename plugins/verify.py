@@ -41,7 +41,7 @@ async def _verify(bot, message):
                            [[InlineKeyboardButton("✅ Approve", callback_data=f"verify_approve_{message.chat.id}"),
                              InlineKeyboardButton("❌ Decline", callback_data=f"verify_decline_{message.chat.id}")],
                             [InlineKeyboardButton("👀 View Group", url=f"{link}")]])) 
-    await message.reply("Verification Request sent ✅\nWe will notify You Personally when it is approved")
+    await message.reply("Verification Request Sent Now Contact @CyniteOfficial To Get Approval")
 
 
 
