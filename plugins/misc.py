@@ -53,10 +53,11 @@ async def misc(bot, update):
                                  disable_web_page_preview=True,
                                  reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("⬅️ Back", callback_data="misc_home")]])) 
 
-    elif data=="about":
-        await update.message.edit(text=script.ABOUT.format((await bot.get_me()).mention), 
+    elif data==buy":
+        await update.message.edit(text=script.BUY.format((await bot.get_me()).mention), 
                                   disable_web_page_preview=True,
-                                  reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("⬅️ Back", callback_data="misc_home")]]))
+                                  reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("QR", callback_data="buy_qr"),
+         InlineKeyboardButton("UPI", callback_data="buy_upi)]]))
          
 @Client.on_message(filters.command("buy"))
 async def buy(bot, message):
