@@ -51,8 +51,8 @@ async def verify_yes(bot, message):
        group     = await get_group(message.chat.id)
        user_id   = group["user_id"] 
        user_name = group["user_name"]    
-    
-         text  = f"#NewRequest\n\n"
+
+    text  = f"#NewRequest\n\n"
     text += f"Requested By: {message.from_user.mention}\n"
     text += f"User ID: `{message.from_user.id}`\n"
     text += f"Group: [{message.chat.title}]({link})\n"
