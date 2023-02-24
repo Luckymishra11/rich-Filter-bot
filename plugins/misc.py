@@ -9,7 +9,7 @@ async def start(bot, message):
                         disable_web_page_preview=True,
                         reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('➕ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ➕', url=f'http://t.me/yourfindbot?startgroup=true')
             ],[InlineKeyboardButton("ʜᴇʟᴘ", callback_data="misc_help"),
-                                                            InlineKeyboardButton("ʙᴜʏ", callback_data="misc_buy")]]))  
+                                                            InlineKeyboardButton("ʙᴜʏ", callback_data="misc_buymoney")]]))  
 @Client.on_message(filters.command("help"))
 async def help(bot, message):
     await message.reply(text=script.HELP, 
@@ -48,7 +48,7 @@ async def misc(bot, update):
                                  disable_web_page_preview=True,
                                  reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("⬅️ Back", callback_data="misc_home")]])) 
 
-    elif data==buy":
+    elif data==buymoney":
         await update.message.edit(text=script.BUY.format((await bot.get_me()).mention), 
                                   disable_web_page_preview=True,
                                   reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("QR", callback_data="buy_qr"),
