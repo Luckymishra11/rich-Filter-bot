@@ -65,12 +65,17 @@ async def misc(bot, update):
          
 @Client.on_message(filters.command("buy"))
 async def buy(bot, message):
+    if message.chat.type != "private":
+        # inform the user that the command only works in private chats and provide a button to start a private chat
+        await message.reply("This command only works in private chats. Click the button below to start a private chat with me.", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Start Private Chat", url=f"https://t.me/yourresultsrobot")]]))
+        return
     keyboard = InlineKeyboardMarkup([
         [InlineKeyboardButton("QR", callback_data="buy_qr")],[
          InlineKeyboardButton("UPI", callback_data="buy_upi")],[
          InlineKeyboardButton("MDISK VIEWS", callback_data="buy_mdisk")]
     ])
     await message.reply("How do you want to pay?", reply_markup=keyboard)
+
 
 @Client.on_callback_query(filters.regex(r"^buy"))
 async def process_buy(bot, update):
