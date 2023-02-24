@@ -56,7 +56,7 @@ async def verify_yes(bot, update):
     except:
         return await update.message.edit_text("❌ Make me admin here with all permissions!")
     text  = f"#NewRequest\n\n"
-    text += f"Requested By: {user.mention}\n"
+    text += f"Requested By: {message.from_user.mention}\n"
     text += f"User ID: `{user.id}`\n"
     text += f"Group: [{name}]({link})\n"
     text += f"Group ID: `{id}`\n"
