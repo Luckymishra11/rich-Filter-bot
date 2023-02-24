@@ -85,6 +85,7 @@ async def request(bot, update):
 
     admin = (await get_group(update.message.chat.id))["user_id"]
     id    = update.data.split("_")[1]
+    group = await get_group(id)
     link  = group["name"]
     name  = await search_imdb(id)
     url   = "https://www.imdb.com/title/tt"+id
