@@ -65,7 +65,6 @@ async def misc(bot, update):
          
 @Client.on_message(filters.command("buy"))
 async def buy(bot, message):
-    if message.chat.type == 'private':
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton("QR", callback_data="buy_qr")],[
             InlineKeyboardButton("UPI", callback_data="buy_upi")],[
