@@ -44,7 +44,7 @@ async def misc(bot, update):
             text=script.START.format(update.from_user.mention),
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("ʜᴇʟᴘ", callback_data="misc_help"),
-                                                InlineKeyboardButton("ᴀʙᴏᴜᴛ", callback_data="misc_about")]])
+                                                InlineKeyboardButton("ʙᴜʏ", callback_data="misc_buymoney")]])
         )
     elif data == "help":
         await update.message.edit(
