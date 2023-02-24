@@ -67,7 +67,7 @@ async def verify_yes(bot, update):
                            disable_web_page_preview=True,
                            reply_markup=InlineKeyboardMarkup(
                            [[InlineKeyboardButton("✅ Approve", callback_data=f"verify_approve_{message.chat.id}"),
-                             InlineKeyboardButton("❌ Decline", callback_data=f"verify_decline_{message.chat.id}")],
+                                                   InlineKeyboardButton("❌ Decline", callback_data=f"verify_decline_{message.chat.id}")],
                             [InlineKeyboardButton("👀 View Group", url=f"{link}")]])) 
     await message.reply("Verification Request sent ✅\nWe will notify You Personally when it is approved")
 
