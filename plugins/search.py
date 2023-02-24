@@ -84,11 +84,12 @@ async def request(bot, update):
        return await update.answer("That's not for you! 👀", show_alert=True)
 
     admin = (await get_group(update.message.chat.id))["user_id"]
-id    = update.data.split("_")[1]
-name  = await search_imdb(id)
-url   = "https://www.imdb.com/title/tt"+id
-text  = f"#Request\n\nName: `{name}`\nIMDb: {url}\n\nGroup ID: {update.message.chat.id}\nGroup Title: {update.message.chat.title}\nSent by: {update.message.from_user.first_name} {update.message.from_user.last_name} (@{update.message.from_user.username})"
-await bot.send_message(chat_id=admin, text=text, disable_web_page_preview=True)
-await update.answer("✅ Request Sent To Admin", show_alert=True)
-await update.message.delete(60)
+    id    = update.data.split("_")[1]
+    name  = await search_imdb(id)
+    url   = "https://www.imdb.com/title/tt"+id
+    text  = f"#Request\n\nName: `{name}`\nIMDb: {url}\n\nGroup ID: {update.message.chat.id}\nGroup Title: {update.message.chat.title}\nSent by: {update.message.from_user.first_name} {update.message.from_user.last_name} (@{update.message.from_user.username})"
+    await bot.send_message(chat_id=admin, text=text, disable_web_page_preview=True)
+    await update.answer("✅ Request Sent To Admin", show_alert=True)
+    await update.message.delete(60)
+
 
