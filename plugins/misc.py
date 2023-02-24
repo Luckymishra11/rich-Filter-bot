@@ -71,10 +71,6 @@ async def buy(bot, message):
             InlineKeyboardButton("MDISK VIEWS", callback_data="buy_mdisk")]
         ])
         await message.reply("How do you want to pay?", reply_markup=keyboard)
-    else:
-        markup = InlineKeyboardMarkup([[InlineKeyboardButton('📨 Send Private Message', url=f'http://t.me/yourresultsrobot?start=buy')]])
-        await message.reply("Sorry, the buy command can only be used in private messages.", reply_markup=markup)
-
 
 
 @Client.on_callback_query(filters.regex(r"^buy"))
