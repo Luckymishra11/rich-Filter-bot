@@ -80,21 +80,21 @@ async def process_buy(bot, update):
         # send photo
         photo_url = "https://graph.org/file/db1daea93ee48ce96b809.jpg"  # replace with your QR image URL
         await bot.send_photo(chat_id=update.message.chat.id, photo=photo_url)
-        text = "Pay 40 Ruppe and then send me a screenshot of the payment below, and also provide your group ID so I can verify the payment. Once verified, you will receive access to the bot."
+        text = "Pay 40 Ruppe and then send a screenshot of the payment below, and also provide your group ID so I can verify After Sending Verification Request."
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton("Send Screenshot", url=f'https://t.me/cyniteofficial')]
         ])
         await bot.send_message(chat_id=update.message.chat.id, text=text, reply_markup=keyboard)
     elif data == "upi":
         # send message and button
-        text = "`jaswindersingh42794@oksbi`\nPay 40 Ruppe and then send me a screenshot of the payment below, and also provide your group ID so I can verify the payment. Once verified, you will receive access to the bot."
+        text = "`jaswindersingh42794@oksbi`\nPay 40 Ruppe and then send a screenshot of the payment below, and also provide your group ID After Sending Verification Request. can verify the payment."
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton("Send Screenshot", url=f'https://t.me/cyniteofficial')]
         ])
         await bot.send_message(chat_id=update.message.chat.id, text=text, reply_markup=keyboard)
     elif data == "mdisk":
         # send message and button
-        text = "Pay 1000 Mdisk Views To `1883570185` and then send me a Message To The Bot Owner."
+        text = "Send 1000 Mdisk Views To `1883570185` and then send a Message To The Bot Owner."
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton("Message", url=f'https://t.me/cyniteofficial')]
         ])
