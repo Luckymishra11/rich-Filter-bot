@@ -36,10 +36,12 @@ async def search(bot, message):
                                           reply_markup=InlineKeyboardMarkup(buttons))
        else:
           msg = await message.reply_text(text=head+results, disable_web_page_preview=True)
-       _time = (int(time()) + (5*60))
+       _time = (int(time()) + (15*60))
        await save_dlt_message(msg, _time)
     except:
        pass
+       
+
 
 @Client.on_callback_query(filters.regex(r"^recheck"))
 async def recheck(bot, update):
@@ -51,11 +53,11 @@ async def recheck(bot, update):
     if clicked != typed:
        return await update.answer("That's not for you! 👀", show_alert=True)
 
-    m=await update.message.edit("Finding..🥵")
+    m=await update.message.edit("Searching..💥")
     id      = update.data.split("_")[-1]
     query   = await search_imdb(id)
     channels = (await get_group(update.message.chat.id))["channels"]
-    head    = "<u>I Have Searched Movie With Wrong Spelling But Take care next time 👇\n\nPowered By </u>\n\n"
+    head    = "<u>I Have Searched Movie With Wrong Spelling But Take care next time 👇</u>\n\n"
     results = ""
     try:
        for channel in channels:
@@ -89,3 +91,4 @@ async def request(bot, update):
     await bot.send_message(chat_id=admin, text=text, disable_web_page_preview=True)
     await update.answer("✅ Request Sent To Admin", show_alert=True)
     await update.message.delete(60)
+
