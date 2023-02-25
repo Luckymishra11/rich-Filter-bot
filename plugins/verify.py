@@ -63,18 +63,17 @@ async def verify_(bot, update):
         await update.message.edit_text(update.message.text.html.replace("#NewRequest", "#Approved"), reply_markup=None)
 
     elif update.data.split("_")[1] == "decline":
-        await delete_group(id)
-        await bot.send_message(chat_id=user, text=f"Your verification request for {name} has been declined 😐 Please contact admin.")
-        await update.message.edit_text(update.message.text.html.replace("#NewRequest", "#Declined"), reply_markup=None)
+    await delete_group(id)
+    await bot.send_message(chat_id=user, text=f"Your verification request for {name} has been declined 😐 Please contact admin.")
+    await update.message.edit_text(update.message.text.html.replace("#NewRequest", "#Declined"), reply_markup=None)
 
     elif update.data.split("_")[1] == "alert":
     try:
         group_link = (await bot.get_chat(id)).invite_link
         group_title = (await bot.get_chat(id)).title
-        alert_text = f"🚨 Alert: The group [{group_title}]({group_link}) has requested verification, but the admin has not yet purchased the paid plan."
-        await bot.send_message(chat_id=id, text=alert_text, disable_web_page_preview=True)
-        await update.answer("Alert sent to group admin!", show_alert=True)
-        await update.callback_query.message.edit_reply_markup(reply_markup=None)
-    except:
-        await update.answer("Something went wrong while sending alert.", show_alert=True)
-
+        alert_text = f"🚨 Verification request alert 🚨\n\nA new verification request has been received for {name} in {group_title} ({group_link})"
+        await bot.send_message(chat_id=id, text=alert_text)
+        await update.answer(text="Alert sent!")
+    except Exception as e:
+        print(str(e))
+        await update.answer(text="Failed to send alert!")
