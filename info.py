@@ -1,8 +1,8 @@
 API_ID       = 12124605
 API_HASH     = "5cf3577d85fd02286535ec2296934287"
 BOT_TOKEN    = "5819892218:AAG5RALzpcyv3dJrQp9RztzVLDz6Gfqb3e0"
-SESSION      = "BQGc3ZEAW7oIDwTrKsrUXp6zIuC2H6C7lFkp-A-Y5-ZdB2Kj7o3WO1kMXG4LOE5IReTo445NwGO1Co0QFbt48KjxsEr6H9G2VfKYpwMxDWPkpP5BiPHbfTw5crdTIwfd5Qen-Mt-vS9La9Wp8I1aceDACLtGzAdF31u4S3kAkDS0xtDx3zuVoyK92r0T6dyMJsg4pcbFQb9lo-9CFzoVEPmtBW3hxNg-z_YIIGEx1W1J3LTy5MdHlYkizcFvyG1YMYqXCsPjOBx8PIVsldUITlsQDunxcbnCiSfC9n4CLT6R2w9VuNjah4tjQU9wdXme3UIPitgrFpi4qAHF6YPKYMgDERY0SQAAAAFapPSDAA"
-DATABASE_URI = "mongodb+srv://postbot:postbot@cluster0.ouwne8q.mongodb.net/?retryWrites=true&w=majority"
+SESSION      = "BQDw418AVxxqadL7ozy53Pl3ZJ8J30yhPii4rj-R6Yq4iXWwM68Bz3kfeYshTrhAODB1nDE420L7ictw-DmVL7VN70gqxZurqRloCthbJUzu0Tjf2HmM-21sUYoKnsz52gAqT3QDHRcL_wqoF1ygOBUpO7xOthMCnJUTYIPdbiyozfVa80XzUnJV1XwxJpJfMvK0handnrvVOWgPlIT76ZJHPsL1G5rFgKSJ8KHQ6abxA9C0lVulhLG5v47bOMOouV4NJYxsE03iQwOG-8modBqHG8tUfE2Aew7-XUou07WBpRth4RjjQuqx5pN5mlB28CYdqH7KcH6p9g82mF9n54h-IGbznQAAAABwcLzMAA"
+DATABASE_URI = "mongodb+srv://autochannelfilter:autochannelfilter@cluster0.mcpsuva.mongodb.net/?retryWrites=true&w=majority"
 LOG_CHANNEL  = -1001803930395
 ADMIN        = 1883570185
 CHANNEL      = "@cynitebackup"
