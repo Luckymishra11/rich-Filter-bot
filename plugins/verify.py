@@ -62,4 +62,5 @@ async def verify_(bot, update):
     else:
        await delete_group(id)
        await bot.send_message(chat_id=user, text=f"Your verification request for {name} has been declined 😐 Please Contact Admin")
-       await update.message.edit_text(update.message.text.html.replace("#NewRequest", "#Declined"), reply_markup
+       await update.message.edit_text(update.message.text.html.replace("#NewRequest", "#Declined"), reply_markup=reply_markup)
+
