@@ -61,6 +61,5 @@ async def verify_(bot, update):
        await update.message.edit(update.message.text.html.replace("#NewRequest", "#Approved"))
     else:
        await delete_group(id)
-       await bot.send_message(id=group, text=f"Your verification request for {name} has been declined 😐 Please Contact Admin")
+       await bot.send_message(chat_id=user, text=f"Your verification request for {name} has been declined Becauss You Dont Bought Paid /buy Now")
        await update.message.edit(update.message.text.html.replace("#NewRequest", "#Declined"))
-    
