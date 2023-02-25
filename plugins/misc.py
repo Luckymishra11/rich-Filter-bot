@@ -1,7 +1,10 @@
+import os
+import asyncio
 from utils import *
 from info import *
 from pyrogram import Client, filters 
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton 
+from pyrogram.types import Message, User, ChatJoinRequest
 
 @Client.on_message(filters.command("start") & ~filters.channel)
 async def start(bot, message):
