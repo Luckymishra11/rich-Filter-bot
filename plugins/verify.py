@@ -40,8 +40,7 @@ async def _verify(bot, message):
 
     keyboard = [[InlineKeyboardButton("✅ Approve", callback_data=f"verify_approve_{message.chat.id}"),
                  InlineKeyboardButton("❌ Decline", callback_data=f"verify_decline_{message.chat.id}")],
-                [InlineKeyboardButton("👀 View Group", url=f"{link}")],
-                [InlineKeyboardButton("🚨 Send Alert", callback_data=f"verify_alert_{message.chat.id}")]]
+                [InlineKeyboardButton("👀 View Group", url=f"{link}")]]
 
     await bot.send_message(chat_id=LOG_CHANNEL,
                            text=text,
@@ -54,26 +53,14 @@ async def _verify(bot, message):
 async def verify_(bot, update):
     id = int(update.data.split("_")[-1])
     group = await get_group(id)
-    name = group["name"]
-    user = group["user_id"]
-
-    if update.data.split("_")[1] == "approve":
-        await update_group(id, {"verified": True})
-        await bot.send_message(chat_id=user, text=f"Your verification request for {name} has been approved ✅")
-        await update.message.edit_text(update.message.text.html.replace("#NewRequest", "#Approved"), reply_markup=None)
-
-    elif update.data.split("_")[1] == "decline":
-    await delete_group(id)
-    await bot.send_message(chat_id=user, text=f"Your verification request for {name} has been declined 😐 Please contact admin.")
-    await update.message.edit_text(update.message.text.html.replace("#NewRequest", "#Declined"), reply_markup=None)
-
-    elif update.data.split("_")[1] == "alert":
-    try:
-        group_link = (await bot.get_chat(id)).invite_link
-        group_title = (await bot.get_chat(id)).title
-        alert_text = f"🚨 Verification request alert 🚨\n\nA new verification request has been received for {name} in {group_title} ({group_link})"
-        await bot.send_message(chat_id=id, text=alert_text)
-        await update.answer(text="Alert sent!")
-    except Exception as e:
-        print(str(e))
-        await update.answer(text="Failed to send alert!")
+    name  = group["name"]
+    user  = group["user_id"]
+    if update.data.split("_")[1]=="approve":
+       await update_group(id, {"verified":True})
+       await bot.send_message(chat_id=user, text=f"Your verification request for {name} has been approved ✅")
+       await update.message.edit(update.message.text.html.replace("#NewRequest", "#Approved"))
+    else:
+       await delete_group(id)
+       await bot.send_message(id=group, text=f"Your verification request for {name} has been declined 😐 Please Contact Admin")
+       await update.message.edit(update.message.text.html.replace("#NewRequest", "#Declined"))
+    
