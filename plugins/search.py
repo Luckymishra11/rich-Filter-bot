@@ -101,7 +101,7 @@ async def request(bot, update):
     await update.message.delete(60)
 
 
-@Client.on_message(filters.command(["set"]) & filters.group & filters.user(ADMIN) & filters.reply_to_message)
+@Client.on_message(filters.command(["set"]) & filters.group & filters.user(Config.BOT_OWNER) & filters.reply_to_message)
 async def set_group_setting(bot, message):
     # Get the group settings
     group_id = message.chat.id
@@ -121,4 +121,22 @@ async def set_group_setting(bot, message):
     if setting_name == "auto_delete":
         if setting_value == "on":
             group_settings["auto_delete"] = True
-            await message.reply_text("
+            await message.reply_text("Auto-delete has been turned on for group admins.")
+        elif setting_value == "off":
+            group_settings["auto_delete"] = False
+            await message.reply_text("Auto-delete has been turned off for group admins.")
+        else:
+            await message.reply_text("Invalid value for auto_delete setting. Please use 'on' or 'off'.")
+    elif setting_name == "admins":
+        admins = setting_value.split(",")
+        group_settings["admins"] = [int(admin.strip()) for admin in admins]
+        await message.reply_text("New group admins have been set.")
+    elif setting_name == "channels":
+        channels = setting_value.split(",")
+        group_settings["channels"] = [int(channel.strip()) for channel in channels]
+        await message.reply_text("New channels have been set.")
+    else:
+        await message.reply_text("Invalid setting name. Please use 'auto_delete', 'admins', or 'channels'.")
+
+    # Save the updated group settings
+    await save_group(group_id, group_settings)
