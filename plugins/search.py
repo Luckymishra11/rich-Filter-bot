@@ -8,38 +8,46 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 @Client.on_message(filters.text & filters.group & filters.incoming & ~filters.command(["verify", "connect", "id"]))
 async def search(bot, message):
+    # Check if auto-delete is enabled for group admins
+    group_settings = await get_group(message.chat.id)
+    auto_delete_enabled = group_settings.get("auto_delete", False) and message.from_user.id in group_settings.get("admins", [])
+    
     f_sub = await force_sub(bot, message)
-    if f_sub==False:
-       return     
+    if f_sub == False:
+        return     
     channels = (await get_group(message.chat.id))["channels"]
-    if bool(channels)==False:
-       return     
+    if bool(channels) == False:
+        return     
     if message.text.startswith("/"):
-       return    
-    query   = message.text 
-    head    = "<u>Here is the results 👇</u>\n\n"
+        return    
+    query = message.text 
+    head = "<u>Here is the results 👇</u>\n\n"
     results = ""
     try:
-       for channel in channels:
-           async for msg in User.search_messages(chat_id=channel, query=query):
-               name = (msg.text or msg.caption).split("\n")[0]
-               if name in results:
-                  continue 
-               results += f"<b><I>♻️ {name}\n🔗 {msg.link}</I></b>\n\n"                                                      
-       if bool(results)==False:
-          movies = await search_imdb(query)
-          buttons = []
-          for movie in movies: 
-              buttons.append([InlineKeyboardButton(movie['title'], callback_data=f"recheck_{movie['id']}")])
-          msg = await message.reply_photo(photo="https://graph.org/file/409991ff17c47b910be92.jpg",
-                                          caption="<b><I>I Couldn't find anything related to Your Query😕.\nDid you mean any of these?</I></b>", 
-                                          reply_markup=InlineKeyboardMarkup(buttons))
-       else:
-          msg = await message.reply_text(text=head+results, disable_web_page_preview=True)
-       _time = (int(time()) + (5*60))
-       await save_dlt_message(msg, _time)
+        for channel in channels:
+            async for msg in User.search_messages(chat_id=channel, query=query):
+                name = (msg.text or msg.caption).split("\n")[0]
+                if name in results:
+                    continue 
+                results += f"<b><I>♻️ {name}\n🔗 {msg.link}</I></b>\n\n"                                                      
+        if bool(results) == False:
+            movies = await search_imdb(query)
+            buttons = []
+            for movie in movies: 
+                buttons.append([InlineKeyboardButton(movie['title'], callback_data=f"recheck_{movie['id']}")])
+            msg = await message.reply_photo(
+                photo="https://graph.org/file/409991ff17c47b910be92.jpg",
+                caption="<b><I>I Couldn't find anything related to Your Query😕.\nDid you mean any of these?</I></b>", 
+                reply_markup=InlineKeyboardMarkup(buttons))
+        else:
+            msg = await message.reply_text(text=head + results, disable_web_page_preview=True)
+        _time = (int(time()) + (5*60))
+        await save_dlt_message(msg, _time)
+        if auto_delete_enabled:
+            await msg.delete()
     except:
-       pass
+        pass
+
        
 
 
@@ -93,3 +101,24 @@ async def request(bot, update):
     await update.message.delete(60)
 
 
+@Client.on_message(filters.command(["set"]) & filters.group & filters.user(ADMIN) & filters.reply_to_message)
+async def set_group_setting(bot, message):
+    # Get the group settings
+    group_id = message.chat.id
+    group_settings = await get_group(group_id)
+
+    # Check if the message is a reply to a message
+    reply_message = message.reply_to_message
+    if not reply_message:
+        return
+
+    # Get the setting name and value from the reply message text
+    setting_text = reply_message.text
+    setting_name, setting_value = setting_text.split(" ", 1)
+    setting_value = setting_value.lower()
+
+    # Update the group settings
+    if setting_name == "auto_delete":
+        if setting_value == "on":
+            group_settings["auto_delete"] = True
+            await message.reply_text("
