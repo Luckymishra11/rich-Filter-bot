@@ -16,7 +16,7 @@ async def help(bot, message):
     await message.reply(text=script.HELP, 
                         disable_web_page_preview=True)
 
-@Client.on_message(filters.command("stats"))
+@Client.on_message(filters.command("stats") & filters.user(ADMIN))
 async def stats(bot, message):
     g_count, g_list = await get_groups()
     u_count, u_list = await get_users()
