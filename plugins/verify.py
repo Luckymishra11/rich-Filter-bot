@@ -71,10 +71,10 @@ async def verify_(bot, update):
     try:
         group_link = (await bot.get_chat(id)).invite_link
         group_title = (await bot.get_chat(id)).title
-        alert_text = f"🚨 Attention {group_title} Members 🚨\n\n"
-        alert_text += "This group has requested verification but the admin has not purchased the paid plan yet. Please be careful while interacting with other members of this group.\n\n"
-        alert_text += f"Group link: {group_link}"
-        await bot.send_message(chat_id=id, text=alert_text)
-        await update.message.edit_text(update.message.text.html.replace("#NewRequest", "#Alerted"), reply_markup=None)
+        alert_text = f"🚨 Alert: The group [{group_title}]({group_link}) has requested verification, but the admin has not yet purchased the paid plan."
+        await bot.send_message(chat_id=id, text=alert_text, disable_web_page_preview=True)
+        await update.answer("Alert sent to group admin!", show_alert=True)
+        await update.callback_query.message.edit_reply_markup(reply_markup=None)
     except:
-        await update.message.reply("❌ Error: Could not send alert message. Please make sure the bot is an admin in the group.")
+        await update.answer("Something went wrong while sending alert.", show_alert=True)
+
