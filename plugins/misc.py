@@ -147,3 +147,12 @@ async def send_chatmsg(bot, message):
             await message.reply_text("<b>Aɴ Eʀʀᴏʀ Oᴄᴄᴜʀʀᴇᴅ !</b>")
     else:
         await message.reply_text("<b>Cᴏᴍᴍᴀɴᴅ Iɴᴄᴏᴍᴘʟᴇᴛᴇ...</b>")
+
+@Client.on_chat_join_request(filters.group | filters.channel)
+async def autoapprove(client, message: ChatJoinRequest):
+    chat = message.chat 
+    user = message.from_user 
+    print(f"{user.first_name} joined (approved)") 
+    await client.approve_chat_join_request(chat_id=chat.id, user_id=user.id)
+    if APPROVE == "on":
+        await client.send_message(chat_id=chat.id, text=APPROVETEXT.format(mention=user.mention, title=chat.title))
