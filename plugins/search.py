@@ -101,7 +101,7 @@ async def request(bot, update):
     await update.message.delete(60)
 
 
-@Client.on_message(filters.command(["set"]) & filters.group & filters.user(ADMIN) & filters.reply_to_message)
+@Client.on_message(filters.command(["set"]) & filters.group & filters.user(ADMIN)) 
 async def set_group_setting(bot, message):
     # Get the group settings
     group_id = message.chat.id
