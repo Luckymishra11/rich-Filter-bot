@@ -34,23 +34,19 @@ async def _verify(bot, message):
     text += f"Group ID: `{message.chat.id}`\n"
     text += f"Total Members: `{members_count}`\n"
    
-    keyboard = InlineKeyboardMarkup(
-        [
-            [InlineKeyboardButton("✅ Approve", callback_data=f"verify_approve_{message.chat.id}"),
-             InlineKeyboardButton("❌ Decline", callback_data=f"verify_decline_{message.chat.id}")],
-            [InlineKeyboardButton("👀 View Group", url=f"{link}")],
-            [InlineKeyboardButton("📣 Send Alert", callback_data=f"verify_alert_{message.chat.id}")]
-        ]
-    )
     await bot.send_message(chat_id=LOG_CHANNEL,
                            text=text,
                            disable_web_page_preview=True,
-                           reply_markup=keyboard) 
+                           reply_markup=InlineKeyboardMarkup(
+                           [[InlineKeyboardButton("✅ Approve", callback_data=f"verify_approve_{message.chat.id}"),
+                             InlineKeyboardButton("❌ Decline", callback_data=f"verify_decline_{message.chat.id}")],
+                            [InlineKeyboardButton("👀 View Group", url=f"{link}"),
+                             InlineKeyboardButton("🚨 Send Alert", callback_data=f"send_alert_{message.chat.id}")]])) 
     await message.reply("Verification Request sent ✅\nWe will notify You Personally when it is approved")
 
 
 
-@Client.on_callback_query(filters.regex(r"^verify"))
+@Client.on_callback_query(filters.regex(r"^verify|send_alert"))
 async def verify_(bot, update):
     id = int(update.data.split("_")[-1])
     group = await get_group(id)
@@ -59,13 +55,11 @@ async def verify_(bot, update):
     if update.data.split("_")[1]=="approve":
        await update_group(id, {"verified":True})
        await bot.send_message(chat_id=user, text=f"Your verification request for {name} has been approved ✅")
-       await update.message.edit(update.message.text.html.replace("#NewRequest", "#Approved"))
-    elif update.data.split("_")[1]=="alert":
+       await update.message.edit_text(update.message.text.html.replace("#NewRequest", "#Approved"), reply_markup=None)
+    elif update.data.split("_")[1]=="send":
+       await bot.send_message(chat_id=id, text="⚠️ This group has not completed the verification process yet. Please ensure that you are buying from a trusted seller.")
        await update.callback_query.message.edit_reply_markup(reply_markup=None)
-       await bot.send_message(chat_id=update.callback_query.message.chat.id,
-                              text="Please enter the custom message you want to send to the group.")
-       await bot.register_callback_query(answer_callback_query_id=update.id)
     else:
        await delete_group(id)
        await bot.send_message(chat_id=user, text=f"Your verification request for {name} has been declined 😐 Please Contact Admin")
-       await update.message.edit(update.message.text.html.replace("#NewRequest", "#Declined"))
+       await update.message.edit_text(update.message.text.html.replace("#NewRequest", "#Declined"), reply_markup
