@@ -3,7 +3,7 @@ from utils import *
 from client import User 
 from pyrogram import Client, filters
 
-@Client.on_message(filters.group & filters.command("connect"))
+@Client.on_message(filters.group & filters.command("index"))
 async def connect(bot, message):
     m=await message.reply("connecting..")
     user = await User.get_me()
@@ -25,7 +25,7 @@ async def connect(bot, message):
           return await message.reply("This channel is already connected! You Cant Connect Again")
        channels.append(channel)
     except:
-       return await m.edit("❌ Incorrect format!\nUse `/connect ChannelID`")    
+       return await m.edit("❌ Incorrect format!\nUse `/index ChannelID`")    
     try:
        chat   = await bot.get_chat(channel)
        group  = await bot.get_chat(message.chat.id)
@@ -91,7 +91,7 @@ async def connections(bot, message):
     if message.from_user.id!=user_id:
        return await message.reply(f"Only {user_name} can use this command 😁")
     if bool(channels)==False:
-       return await message.reply("This group is currently not connected to any channels!\nConnect one using /connect")
+       return await message.reply("This group is currently not connected to any channels!\nConnect one using /index")
     text = "This Group is currently connected to:\n\n"
     for channel in channels:
         try:
