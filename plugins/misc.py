@@ -81,7 +81,7 @@ async def process_buy(bot, update):
         # send photo
         photo_url = "https://graph.org/file/2016763b27ae4b67c7d38.jpg"  # replace with your QR image URL
         await bot.send_photo(chat_id=update.message.chat.id, photo=photo_url)
-        text = "Pay On Qr And Send A Message To Owner"
+        text = "Pay And Send A Message To Owner"
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton("Send message", url=f'https://t.me/Owner_21')]
         ])
