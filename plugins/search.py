@@ -22,6 +22,7 @@ async def clean_query(query):
 
 @Client.on_message(filters.text & filters.group & filters.incoming & ~filters.command(["verify", "connect", "id"]))
 async def search(bot, message):
+    start_time = time() # Record the start time
     f_sub = await force_sub(bot, message)
     if f_sub == False:
         return
@@ -55,7 +56,10 @@ async def search(bot, message):
             await save_dlt_message(msg, _time)
             return
 
-        msg = await message.reply_text(text=head + results, disable_web_page_preview=True)
+        end_time = time() # Record the end time
+        duration_ms = int((end_time - start_time) * 1000) # Calculate the duration in milliseconds
+        footer = f"\n\nSearched in {duration_ms} ms." # Add the duration to the footer
+        msg = await message.reply_text(text=head + results + footer, disable_web_page_preview=True)
         _time = int(time()) + (15 * 60)
         await save_dlt_message(msg, _time)
     except:
