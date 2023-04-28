@@ -79,16 +79,16 @@ async def process_buy(bot, update):
     data = update.data.split("_")[-1]
     if data == "qr":
         # send photo
-        photo_url = "https://graph.org/file/1d5e42f364f7a99b7540b.jpg"  # replace with your QR image URL
+        photo_url = "https://graph.org/file/2016763b27ae4b67c7d38.jpg"  # replace with your QR image URL
         await bot.send_photo(chat_id=update.message.chat.id, photo=photo_url)
-        text = "Send A Message To Owner To Buy Premium"
+        text = "Pay On Qr And Send A Message To Owner"
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton("Send message", url=f'https://t.me/Owner_21')]
         ])
         await bot.send_message(chat_id=update.message.chat.id, text=text, reply_markup=keyboard)
     elif data == "upi":
         # send message and button
-        text = "Send Messags To Owner To Buy Premium"
+        text = "Pay On `Pratibham457@oksbi` and Send Message To Owner"
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton("Send message", url=f'https://t.me/Owner_21')]
         ])
