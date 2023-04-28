@@ -70,8 +70,7 @@ async def misc(bot, update):
 async def buy(bot, message):
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton("QR", callback_data="buy_qr")],[
-            InlineKeyboardButton("UPI", callback_data="buy_upi")],[
-            InlineKeyboardButton("MDISK VIEWS", callback_data="buy_mdisk")]
+            InlineKeyboardButton("UPI", callback_data="buy_upi")]
         ])
         await message.reply("How do you want to pay?", reply_markup=keyboard)
 
@@ -90,20 +89,12 @@ async def process_buy(bot, update):
         await bot.send_message(chat_id=update.message.chat.id, text=text, reply_markup=keyboard)
     elif data == "upi":
         # send message and button
-        text = "Sens Messags To Owner To Buy Premium"
+        text = "Send Messags To Owner To Buy Premium"
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton("Send message", url=f'https://t.me/Owner_21')]
         ])
         await bot.send_message(chat_id=update.message.chat.id, text=text, reply_markup=keyboard)
-    elif data == "mdisk":
-        # send message and button
-        text = "Send Message To Owner To Buy Premium"
-        keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("Send Message", url=f'https://t.me/Owner_21')]
-        ])
-        await bot.send_message(chat_id=update.message.chat.id, text=text, reply_markup=keyboard)
 
- 
 @Client.on_message(filters.command('leave') & filters.private &  filters.chat(ADMIN))
 async def leave_a_chat(bot, message):
     if len(message.command) == 1:
