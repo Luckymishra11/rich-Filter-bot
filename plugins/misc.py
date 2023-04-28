@@ -11,7 +11,7 @@ async def start(bot, message):
     await add_user(message.from_user.id, message.from_user.first_name)
     await message.reply(text=script.START.format(message.from_user.mention),
                         disable_web_page_preview=True,
-                        reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('➕ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ➕', url=f'http://t.me/yourresultsrobot?startgroup=true')
+                        reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('➕ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ➕', url=f'http://t.me/Rich_filter_bot?startgroup=true')
             ],[InlineKeyboardButton("ʜᴇʟᴘ", callback_data="misc_help"),
                                                             InlineKeyboardButton("ʙᴜʏ", callback_data="misc_buymoney")]]))  
 @Client.on_message(filters.command("help"))
@@ -85,21 +85,21 @@ async def process_buy(bot, update):
         await bot.send_photo(chat_id=update.message.chat.id, photo=photo_url)
         text = "Pay 40 Ruppe and then send a screenshot of the payment below, and also provide your group ID so I can verify After Sending Verification Request."
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("Send Screenshot", url=f'https://t.me/cyniteofficial')]
+            [InlineKeyboardButton("Send Screenshot", url=f'https://t.me/Owner_21')]
         ])
         await bot.send_message(chat_id=update.message.chat.id, text=text, reply_markup=keyboard)
     elif data == "upi":
         # send message and button
-        text = "`jaswindersingh42794@oksbi`\nPay 40 Ruppe and then send a screenshot of the payment below, and also provide your group ID After Sending Verification Request. can verify the payment."
+        text = "`jaswindersingh42794@oksbi`\nPay 30 Ruppe and then send a screenshot of the payment below, and also provide your group ID After Sending Verification Request. can verify the payment."
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("Send Screenshot", url=f'https://t.me/cyniteofficial')]
+            [InlineKeyboardButton("Send Screenshot", url=f'https://t.me/Owner_21')]
         ])
         await bot.send_message(chat_id=update.message.chat.id, text=text, reply_markup=keyboard)
     elif data == "mdisk":
         # send message and button
-        text = "Send 1000 Mdisk Views To `1883570185` and then send a Message To The Bot Owner."
+        text = "Send 1000 Mdisk Views To `5558463511` and then send a Message To The Bot Owner."
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("Message", url=f'https://t.me/cyniteofficial')]
+            [InlineKeyboardButton("Message", url=f'https://t.me/Owner_21')]
         ])
         await bot.send_message(chat_id=update.message.chat.id, text=text, reply_markup=keyboard)
 
