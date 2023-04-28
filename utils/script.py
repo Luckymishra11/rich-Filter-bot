@@ -13,7 +13,7 @@ It Will Cost 30₹ Per Month
 - Add me in your group & channel with all permissions. 
 - Send /verify in group & wait for It To Accept Or Directly Contact To Owner After Request @Rich_filter_bot.
 - After verification send /connect YourChannelID
-- Example : /connect -100xxxxxxxxxx
+- Example : /index -100xxxxxxxxxx
 - Done ✅. <b><I>Enjoy 💜❤</I></b> )
 
 Remove a Channel with - /disconnect-100xxxxxxxxxxx
