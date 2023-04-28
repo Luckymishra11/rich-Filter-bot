@@ -5,90 +5,58 @@ from time import time
 from client import User
 from pyrogram import Client, filters 
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton 
+import urllib.parse
+
+ignore_words = ["in", "and", "hindi"] # words to ignore in search query
+
+async def should_ignore(word):
+    # checks if a word should be ignored in the search query
+    return word.lower() in ignore_words
+
+async def clean_query(query):
+    # cleans the search query by removing ignored words
+    words = query.split()
+    cleaned_words = [word for word in words if not await should_ignore(word)]
+    return " ".join(cleaned_words)
+
 
 @Client.on_message(filters.text & filters.group & filters.incoming & ~filters.command(["verify", "connect", "id"]))
 async def search(bot, message):
     f_sub = await force_sub(bot, message)
-    if f_sub==False:
-       return     
+    if f_sub == False:
+        return
+
     channels = (await get_group(message.chat.id))["channels"]
-    if bool(channels)==False:
-       return     
+    if not channels:
+        return
+
     if message.text.startswith("/"):
-       return    
-    query   = message.text 
-    head    = "<u>Here is the results 👇</u>\n\n"
+        return
+
+    query = await clean_query(message.text)
+    head = "<u>Here are the results 👇</u>\n\n"
     results = ""
     try:
-       for channel in channels:
-           async for msg in User.search_messages(chat_id=channel, query=query):
-               name = (msg.text or msg.caption).split("\n")[0]
-               if name in results:
-                  continue 
-               results += f"<b><I>♻️ {name}\n🔗 {msg.link}</I></b>\n\n"                                                      
-       if bool(results)==False:
-          movies = await search_imdb(query)
-          buttons = []
-          for movie in movies: 
-              buttons.append([InlineKeyboardButton(movie['title'], callback_data=f"recheck_{movie['id']}")])
-          msg = await message.reply_photo(photo="https://graph.org/file/409991ff17c47b910be92.jpg",
-                                          caption="<b><I>I Couldn't find anything related to Your Query😕.\nDid you mean any of these?</I></b>", 
-                                          reply_markup=InlineKeyboardMarkup(buttons))
-       else:
-          msg = await message.reply_text(text=head+results, disable_web_page_preview=True)
-       _time = (int(time()) + (15*60))
-       await save_dlt_message(msg, _time)
+        for channel in channels:
+            async for msg in User.search_messages(chat_id=channel, query=query):
+                name = (msg.text or msg.caption).split("\n")[0]
+                if name in results:
+                    continue
+                results += f"<b><i>♻️ {name}\n🔗 {msg.link}</i></b>\n\n"
+
+        if not results:
+            # Send message if no results are found
+            query_encoded = urllib.parse.quote_plus(query)
+            no_results_message = f"No Results Found For <b>{query}</b>\n\n"
+            google_url = f"https://www.google.com/search?q={query_encoded}"
+            markup = InlineKeyboardMarkup([[InlineKeyboardButton("Check Spelling on Google 🔍", url=google_url)]])
+            msg = await message.reply_text(text=no_results_message, disable_web_page_preview=True, reply_markup=markup)
+            _time = int(time()) + (15 * 60)
+            await save_dlt_message(msg, _time)
+            return
+
+        msg = await message.reply_text(text=head + results, disable_web_page_preview=True)
+        _time = int(time()) + (15 * 60)
+        await save_dlt_message(msg, _time)
     except:
-       pass
-       
-
-
-@Client.on_callback_query(filters.regex(r"^recheck"))
-async def recheck(bot, update):
-    clicked = update.from_user.id
-    try:      
-       typed = update.message.reply_to_message.from_user.id
-    except:
-       return await update.message.delete(2)       
-    if clicked != typed:
-       return await update.answer("That's not for you! 👀", show_alert=True)
-
-    m=await update.message.edit("Searching..💥")
-    id      = update.data.split("_")[-1]
-    query   = await search_imdb(id)
-    channels = (await get_group(update.message.chat.id))["channels"]
-    head    = "<u>I Have Searched Movie With Wrong Spelling But Take care next time 👇</u>\n\n"
-    results = ""
-    try:
-       for channel in channels:
-           async for msg in User.search_messages(chat_id=channel, query=query):
-               name = (msg.text or msg.caption).split("\n")[0]
-               if name in results:
-                  continue 
-               results += f"<b><I>♻️🍿 {name}</I></b>\n\n🔗 {msg.link}</I></b>\n\n"
-       if bool(results)==False:          
-          return await update.message.edit("Still no results found! Please Request To Group Admin", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🎯 Request To Admin 🎯", callback_data=f"request_{id}")]]))
-       await update.message.edit(text=head+results, disable_web_page_preview=True)
-    except Exception as e:
-       await update.message.edit(f"❌ Error: `{e}`")
-
-
-@Client.on_callback_query(filters.regex(r"^request"))
-async def request(bot, update):
-    clicked = update.from_user.id
-    try:      
-       typed = update.message.reply_to_message.from_user.id
-    except:
-       return await update.message.delete()       
-    if clicked != typed:
-       return await update.answer("That's not for you! 👀", show_alert=True)
-
-    admin = (await get_group(update.message.chat.id))["user_id"]
-    id    = update.data.split("_")[1]
-    name  = await search_imdb(id)
-    url   = "https://www.imdb.com/title/tt"+id
-    text  = f"#Request\n\nName: `{name}`\nIMDb: {url}\n\nGroup ID: {update.message.chat.id}\nGroup Name: {update.message.chat.title}"
-    await bot.send_message(chat_id=admin, text=text, disable_web_page_preview=True)
-    await update.answer("✅ Request Sent To Admin", show_alert=True)
-    await update.message.delete(60)
-
+        pass
