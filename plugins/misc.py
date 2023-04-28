@@ -61,8 +61,7 @@ async def misc(bot, update):
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup([
         [InlineKeyboardButton("Qr", callback_data="buy_qr")],[
-         InlineKeyboardButton("Upi", callback_data="buy_upi")],[
-         InlineKeyboardButton("Mdisk Views", callback_data="buy_mdisk")]
+         InlineKeyboardButton("Upi", callback_data="buy_upi")]
     ])) 
 
          
