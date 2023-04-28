@@ -58,7 +58,7 @@ async def search(bot, message):
 
         end_time = time() # Record the end time
         duration_ms = int((end_time - start_time) * 1000) # Calculate the duration in milliseconds
-        footer = f"\nSearched in {duration_ms} ms." # Add the duration to the footer
+        footer = f"Searched in {duration_ms} ms." # Add the duration to the footer
         msg = await message.reply_text(text=head + results + footer, disable_web_page_preview=True)
         _time = int(time()) + (15 * 60)
         await save_dlt_message(msg, _time)
