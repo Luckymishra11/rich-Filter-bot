@@ -49,7 +49,7 @@ async def search(bot, message):
             # Send message if no results are found
             query_encoded = urllib.parse.quote_plus(query)
             no_results_message = f"No Results Found For <b>{query}</b>\n\n"
-            google_url = f"https://www.google.com/search?q={query_encoded}"
+            google_url = f"https://www.google.com/search?q={query_encoded}+movie"
             markup = InlineKeyboardMarkup([[InlineKeyboardButton("Check Spelling on Google 🔍", url=google_url)]])
             msg = await message.reply_text(text=no_results_message, disable_web_page_preview=True, reply_markup=markup)
             _time = int(time()) + (15 * 60)
