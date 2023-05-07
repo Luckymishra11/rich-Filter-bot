@@ -8,11 +8,11 @@ Send /help For More"""
 
     HELP = """To Use me In A Group
 First Buy Subscription With - /buy and Then
-It Will Cost 30₹ Per Month
+It Will Cost index 50₹ Per Month
 
 - Add me in your group & channel with all permissions. 
-- Send /verify in group & wait for It To Accept Or Directly Contact To Owner After Request @Rich_filter_bot.
-- After verification send /connect YourChannelID
+- Send /verify in group & wait for It To Accept Or Directly Contact To Owner After Request @Owner_21.
+- After verification send /index YourChannelID
 - Example : /index -100xxxxxxxxxx
 - Done ✅. <b><I>Enjoy 💜❤</I></b> )
 
