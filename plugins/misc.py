@@ -61,31 +61,11 @@ async def misc(bot, update):
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup([
         [
-         InlineKeyboardButton("Upi", callback_data="buy_upi")]
+         InlineKeyboardButton("Buy", url=f'https://t.me/Owner_21')]
     ])) 
 
-         
-@Client.on_callback_query(filters.regex(r"^buy"))
-async def process_buy(bot, update):
-    data = update.callback_query.data
-    if data == "upi":
-        # send message and button
-        text = "All Available Plans:\n\n50 Inr Per Month\n300 Inr Per 6 Month\n500 Inr Per Year\n\nClick on the buy button to buy the subscription\n"
-        keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("Buy", url=f'https://t.me/Owner_21')]
-        ])
-        await bot.send_message(chat_id=update.callback_query.message.chat.id, text=text, reply_markup=keyboard)
 
 
-@Client.on_callback_query(filters.regex(r"^buy"))
-async def process_buy(bot, update):
-    if data == "upi":
-        # send message and button
-        text = "All Available Plans:\n\n50 Inr Per Month\n300 Inr Per 6 Month\n500 Inr Per Year\n\nClick on the buy button to buy the subscription\n"
-        keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("Buy", url=f'https://t.me/Owner_21')]
-        ])
-        await bot.send_message(chat_id=update.message.chat.id, text=text, reply_markup=keyboard)
 
 @Client.on_message(filters.command('leave') & filters.private &  filters.chat(ADMIN))
 async def leave_a_chat(bot, message):
