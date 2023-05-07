@@ -60,7 +60,7 @@ async def misc(bot, update):
             text=script.BUY.format((await bot.get_me()).mention),
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup([
-        [InlineKeyboardButton("Qr", callback_data="buy_qr")],[
+        [
          InlineKeyboardButton("Upi", callback_data="buy_upi")]
     ])) 
 
@@ -68,7 +68,7 @@ async def misc(bot, update):
 @Client.on_message(filters.command("buy"))
 async def buy(bot, message):
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("QR", callback_data="buy_qr")],[
+            [
             InlineKeyboardButton("UPI", callback_data="buy_upi")]
         ])
         await message.reply("How do you want to pay?", reply_markup=keyboard)
@@ -76,21 +76,11 @@ async def buy(bot, message):
 
 @Client.on_callback_query(filters.regex(r"^buy"))
 async def process_buy(bot, update):
-    data = update.data.split("_")[-1]
-    if data == "qr":
-        # send photo
-        photo_url = "https://graph.org/file/2016763b27ae4b67c7d38.jpg"  # replace with your QR image URL
-        await bot.send_photo(chat_id=update.message.chat.id, photo=photo_url)
-        text = "Pay And Send A Message To Owner"
-        keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("Send message", url=f'https://t.me/Owner_21')]
-        ])
-        await bot.send_message(chat_id=update.message.chat.id, text=text, reply_markup=keyboard)
-    elif data == "upi":
+    if data == "upi":
         # send message and button
-        text = "Pay On `Pratibham457@oksbi` and Send Message To Owner"
+        text = "All Available Plans:\n\n50 Inr Per Month\n300 Inr Per 6 Month\n500 Inr Per Year\n\nClick on the buy button to buy the subscription\n"
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("Send message", url=f'https://t.me/Owner_21')]
+            [InlineKeyboardButton("Buy", url=f'https://t.me/Owner_21')]
         ])
         await bot.send_message(chat_id=update.message.chat.id, text=text, reply_markup=keyboard)
 
