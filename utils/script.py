@@ -21,7 +21,7 @@ this will help you to remove a indexed channel from your group.
 
 Get connected channels list with - /connections"""
 
-    BUY = """How do you want to pay?"""
+    BUY = """All Available Plans:\n\n50 Inr Per Month\n300 Inr Per 6 Month\n500 Inr Per Year\n\nClick on the buy button to buy the subscription\n"""
 
     STATS = """My Status 💫
 
