@@ -50,7 +50,11 @@ async def search(bot, message):
             query_encoded = urllib.parse.quote_plus(query)
             no_results_message = f"No Results Found For <b>{query}</b>\n\n"
             google_url = f"https://www.google.com/search?q={query_encoded}+movie"
-            markup = InlineKeyboardMarkup([[InlineKeyboardButton("Check Spelling on Google 🔍", url=google_url)]])
+            release_date_url = f"https://www.google.com/search?q={query_encoded}+release+date"
+            markup = InlineKeyboardMarkup([
+                [InlineKeyboardButton("Check Spelling on Google 🔍", url=google_url)],
+                [InlineKeyboardButton("Check Release Date on Google 📅", url=release_date_url)]
+            ])
             msg = await message.reply_text(text=no_results_message, disable_web_page_preview=True, reply_markup=markup)
             _time = int(time()) + (15 * 60)
             await save_dlt_message(msg, _time)
@@ -64,3 +68,4 @@ async def search(bot, message):
         await save_dlt_message(msg, _time)
     except:
         pass
+
