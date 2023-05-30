@@ -56,7 +56,7 @@ async def search(bot, message):
                 [InlineKeyboardButton("Check Release Date on Google 📅", url=release_date_url)]
             ])
             msg = await message.reply_text(text=no_results_message, disable_web_page_preview=True, reply_markup=markup)
-            _time = int(time()) + (15 * 60)
+            _time = int(time()) + (2 * 60)
             await save_dlt_message(msg, _time)
             return
 
@@ -64,7 +64,7 @@ async def search(bot, message):
         duration_ms = int((end_time - start_time) * 1000) # Calculate the duration in milliseconds
         footer = f"Searched in {duration_ms} ms." # Add the duration to the footer
         msg = await message.reply_text(text=head + results + footer, disable_web_page_preview=True)
-        _time = int(time()) + (15 * 60)
+        _time = int(time()) + (120 * 60)
         await save_dlt_message(msg, _time)
     except:
         pass
