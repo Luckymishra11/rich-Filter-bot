@@ -1,7 +1,7 @@
 class script(object):
     START = """**Hello {} 🤟**
    
-I am **Your Results Bot**.I am best Channel Link Search Bot! 
+I am **Rich Filter bot**
 I Will filter your channel posts automatically and send it in your group chat when Someone search it.
 
 Send /help For More"""
