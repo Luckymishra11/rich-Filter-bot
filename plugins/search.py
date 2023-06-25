@@ -7,7 +7,7 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton 
 import urllib.parse
 
-ignore_words = ["in", "and", "hindi"] # words to ignore in search query
+ignore_words = ["in", "and", "hindi", "movie"] # words to ignore in search query
 
 async def should_ignore(word):
     # checks if a word should be ignored in the search query
