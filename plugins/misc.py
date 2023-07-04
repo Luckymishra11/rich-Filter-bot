@@ -40,23 +40,87 @@ async def id(bot, message):
 @Client.on_callback_query(filters.regex(r"^misc"))
 async def misc(bot, update):
     data = update.data.split("_")[-1]
+    current_currency = "INR"  # Assuming INR as default, you can change it accordingly based on your requirement
+
     if data == "home":
         await update.message.edit(
             text=script.START.format(update.from_user.mention),
             disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("ʙᴜʏ", callback_data="misc_buymoney")]])
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("ʙᴜʏ", callback_data="misc_buymoney")]
+            ])
         )
     elif data == "buymoney":
+        if current_currency == "INR":
+            text = """
+            **These are the prices in USD:**
+
+    `1.2 USD` - per Month 
+    `6.2 USD` - per 6 Months
+    `12.3 USD` - per Year
+
+    Click on the `Buy` button to contact the owner."""
+            buttons = [
+                [InlineKeyboardButton("Buy", url=f'https://t.me/Owner_21')],
+                [InlineKeyboardButton("USD Price", callback_data="usdprice")]
+            ]
+        else:
+            text = """
+            **These are the prices in INR:**
+
+    `99 INR` - per Month 
+    `599 INR` -  per 6 Months
+    `1000 INR` -  per Year
+
+    Click on the `Buy` button to contact the owner."""
+            buttons = [
+                [InlineKeyboardButton("Buy", url=f'https://t.me/Owner_21')],
+                [InlineKeyboardButton("INR Price", callback_data="inrprice")]
+            ]
+
         await update.message.edit(
-            text=script.BUY.format((await bot.get_me()).mention),
+            text=text,
             disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup([
-        [
-         InlineKeyboardButton("Buy", url=f'https://t.me/Owner_21')]
-    ])) 
+            reply_markup=InlineKeyboardMarkup(buttons)
+        )
+    elif data == "inrprice":
+        text = """
+            **These are the prices in USD:**
 
+    `1.2 USD` - per Month 
+    `6.2 USD` - per 6 Months
+    `12.3 USD` - per Year
 
+    Click on the `Buy` button to contact the owner."""
+        buttons = [
+            [InlineKeyboardButton("Buy", url=f'https://t.me/Owner_21')],
+            [InlineKeyboardButton("USD Price", callback_data="usdprice")]
+        ]
 
+        await update.message.edit(
+            text=text,
+            disable_web_page_preview=True,
+            reply_markup=InlineKeyboardMarkup(buttons)
+        )
+    elif data == "usdprice":
+        text = """
+            **These are the prices in INR:**
+
+    `99 INR` - per Month 
+    `599 INR` -  per 6 Months
+    `1000 INR` -  per Year
+
+    Click on the `Buy` button to contact the owner."""
+        buttons = [
+            [InlineKeyboardButton("Buy", url=f'https://t.me/Owner_21')],
+            [InlineKeyboardButton("INR Price", callback_data="inrprice")]
+        ]
+
+        await update.message.edit(
+            text=text,
+            disable_web_page_preview=True,
+            reply_markup=InlineKeyboardMarkup(buttons)
+        )
 
 @Client.on_message(filters.command('leave') & filters.private &  filters.chat(ADMIN))
 async def leave_a_chat(bot, message):
