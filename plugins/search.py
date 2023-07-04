@@ -6,6 +6,7 @@ from client import User
 from pyrogram import Client, filters 
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton 
 import urllib.parse
+import time
 
 ignore_words = ["in", "and", "hindi", "movie", "tamil", "telugu", "dub", "hd", "man", "series", "full", "dubbed", "kannada", "season", "part", "all"] # words to ignore in search query
 
