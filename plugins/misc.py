@@ -12,7 +12,8 @@ async def start(bot, message):
     await message.reply(text=script.START.format(message.from_user.mention),
                         disable_web_page_preview=True,
                         reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('➕ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ➕', url=f'http://t.me/Rich_filter_bot?startgroup=true')
-            ],[InlineKeyboardButton("ʙᴜʏ", callback_data="misc_buymoney")]]))  
+            ],[InlineKeyboardButton("ʜᴇʟᴘ", callback_data="misc_help"),
+                                                            InlineKeyboardButton("ʙᴜʏ", callback_data="misc_buymoney")]]))  
 @Client.on_message(filters.command("help"))
 async def help(bot, message):
     await message.reply(text=script.HELP, 
@@ -45,35 +46,24 @@ async def misc(bot, update):
         await update.message.edit(
             text=script.START.format(update.from_user.mention),
             disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("ʙᴜʏ", callback_data="misc_buymoney")]])
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("ʜᴇʟᴘ", callback_data="misc_help"),
+                                                InlineKeyboardButton("ʙᴜʏ", callback_data="misc_buymoney")]])
+        )
+    elif data == "help":
+        await update.message.edit(
+            text=script.HELP,
+            disable_web_page_preview=True,
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("⬅️ Back", callback_data="misc_home")]])
         )
     elif data == "buymoney":
         await update.message.edit(
-            text="""**These are the prices in USD:**
+            text=script.BUY.format((await bot.get_me()).mention),
+            disable_web_page_preview=True,
+            reply_markup=InlineKeyboardMarkup([
+        [
+         InlineKeyboardButton("Buy", url=f'https://t.me/Owner_21')]
+    ])) 
 
-`1.2 USD` - per Month 
-`6.2 USD` - per 6 Months
-`12.3 USD` - per Year
-
-Click on the `Buy` button to contact the owner.""",
-            buttons=[
-                [Button.url("Buy Now", url=f'https://t.me/Owner_21')],
-                [Button.inline("INR Price", "inrprice")],
-            ]
-        )
-    else:
-        text = """**These are the prices in INR:**
-
-`99 INR` - per Month 
-`599 INR` -  per 6 Months
-`1000 INR` -  per Year
-
-Click on the `Buy` button to contact the owner."""
-        buttons = [
-            [Button.url("Buy Now", url=f'https://t.me/Owner_21')],
-            [Button.inline("USD Price", "buysubscription")],
-        ]
-        return await update.message.edit(text=text, buttons=buttons)
 
 
 
