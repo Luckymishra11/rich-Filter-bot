@@ -49,20 +49,20 @@ async def misc(bot, update):
         )
     elif data == "buymoney":
         await update.message.edit(
-            text = """**These are the prices in USD:**
+            text="""**These are the prices in USD:**
 
 `1.2 USD` - per Month 
 `6.2 USD` - per 6 Months
 `12.3 USD` - per Year
 
-Click on the `Buy` button to contact the owner."""
-        buttons = [
-            [Button.url("Buy Now", url=f'https://t.me/Owner_21')],
-            [Button.inline("INR Price", "inrprice")],
-        ]
+Click on the `Buy` button to contact the owner.""",
+            buttons=[
+                [Button.url("Buy Now", url=f'https://t.me/Owner_21')],
+                [Button.inline("INR Price", "inrprice")],
+            ]
+        )
     else:
-        text = """
-        **These are the prices in INR:**
+        text = """**These are the prices in INR:**
 
 `99 INR` - per Month 
 `599 INR` -  per 6 Months
@@ -73,7 +73,7 @@ Click on the `Buy` button to contact the owner."""
             [Button.url("Buy Now", url=f'https://t.me/Owner_21')],
             [Button.inline("USD Price", "buysubscription")],
         ]
-    return await event.edit(text, buttons=buttons)
+        return await update.message.edit(text=text, buttons=buttons)
 
 
 
