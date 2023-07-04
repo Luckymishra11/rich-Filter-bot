@@ -5,7 +5,6 @@ I am **Rich Filter bot**
 I Will filter your channel posts automatically and send it in your group chat when Someone search it.
 
 Send /help For More info!"""
-    Send /buy to purchase subscription!"""
     
     HELP = """To Use me In A Group
 First Buy Subscription With - /buy and Then
