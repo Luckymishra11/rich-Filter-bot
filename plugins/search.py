@@ -44,7 +44,7 @@ async def search(bot, message):
                 name = (msg.text or msg.caption).split("\n")[0]
                 if name in results:
                     continue
-                results += f"<b><i>♻️ {name}\n🔗 {msg.link}</i></b>\n\n"
+                results += f"<b><i> {name}\n {msg.link}</i></b>\n\n"
 
         if not results:
             # Send message if no results are found
