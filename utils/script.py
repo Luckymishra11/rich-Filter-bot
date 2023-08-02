@@ -7,8 +7,8 @@ I Will filter your channel posts automatically and send it in your group chat wh
 Send /help For More info!"""
     
     HELP = """To Use me In A Group
-First Buy Subscription With - /buy and Then
-It Will Cost index 50₹ Per Month
+First Buy Subscription , Contact the bot owner 👉 @owner_21
+It Will Cost index 80rs Per Month
 
 - Add me in your group & channel with all permissions. 
 - Send /verify in group & wait for It To Accept Or Directly Contact To Owner After Request @Owner_21.
