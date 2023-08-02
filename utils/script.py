@@ -23,9 +23,9 @@ Get connected channels list with - /connections"""
 
     BUY = """**These are the prices in INR:**
 
-`99 INR` - per Month 
-`599 INR` -  per 6 Months
-`1000 INR` -  per Year
+`80 INR` - per Month 
+`450 INR` -  per 6 Months
+`900 INR` -  per Year
 
 Click on the `Buy` button to contact the owner."""
 
